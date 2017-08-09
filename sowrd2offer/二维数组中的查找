@@ -1,0 +1,37 @@
+/*
+在一个二维数组中，每一行都按照从左到右递增的顺序排序，每一列都按照从上到下递增的顺序排序。
+请完成一个函数，输入这样的一个二维数组和一个整数，判断数组中是否含有该整数。
+*/
+//无脑：
+public class Solution {
+    public boolean Find(int target, int [][] array) {
+        if(array.length==0)
+            return false;
+		for(int i=0;i<array.length;i++){
+            for(int k=0;k<array[0].length;k++){
+                if(array[i][k]==target)
+                    return true;
+            }
+        }
+        return false;
+    }
+}
+
+//稍微动脑
+public class Solution {
+    public boolean Find(int target, int [][] array) {
+        if(array.length==0)
+            return false;
+		int one=array.length-1;
+        int two=0;
+        while(one>=0&&two<array[0].length){
+            if(array[one][two]>target)
+                one--;
+            else if(array[one][two]<target)
+                two++;
+            else
+                return true;
+        }
+        return false;
+    }
+}
