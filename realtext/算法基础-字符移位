@@ -1,0 +1,35 @@
+/*
+小Q最近遇到了一个难题：把一个字符串的大写字母放到字符串的后面，各个字符的相对位置不变，且不能申请额外的空间。
+你能帮帮小Q吗？
+
+in
+输入数据有多组，每组包含一个字符串s，且保证:1<=s.length<=1000.
+
+out
+对于每组数据，输出移位后的字符串。
+*/
+
+import java.util.Scanner;
+
+public class ToLastBig {
+	public static void main(String args[]){
+		Scanner sc=new Scanner(System.in);
+		while(sc.hasNext()){
+			String str=sc.nextLine();
+			char[] result=str.toCharArray();
+			int tempint=0;
+			for(int i=0;i<result.length;i++){	
+				char temp;
+				if(result[i]>='a'&&result[i]<='z'){
+					temp=result[i];
+					for(int j=i;j>tempint;j--){
+						result[j]=result[j-1];
+					}
+					result[tempint]=temp;
+					tempint++;
+				}
+			}
+			System.out.println(result);
+		}
+	}
+}
