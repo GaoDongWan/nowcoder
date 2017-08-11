@@ -62,6 +62,10 @@ public class IntrestingNum {
 			int b = map.get(list.get(list.size() - 1));
 			maxr = a * b;
 			System.out.println(minr+"  "+maxr);
+			/*
+			int a = map.get(nums[0]);
+			int b = map.get(nums[nums.length-1]);
+			*/
 		}
 	}
 }
