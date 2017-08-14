@@ -10,3 +10,49 @@ in
 out
 输出一个整数, 表示小易最多能独立生活多少天。
 */
+
+//思考后 先考虑能租多少天
+	public static void main(String args[]) {
+		Scanner sc=new Scanner(System.in);
+        while(sc.hasNext()){
+        	int x,f,d,p,i;
+        	x=sc.nextInt();
+        	f=sc.nextInt();
+        	d=sc.nextInt();
+        	p=sc.nextInt();
+        	int temp=d/x;
+        	if(temp<=f)
+        		System.out.println(temp);
+        	else{
+        		System.out.println(f+(d-f*x)/(x+p));
+        	}
+        }
+	}
+
+//无脑
+import java.util.Scanner;
+
+public class DuLi {
+	public static void main(String args[]) {
+		Scanner sc=new Scanner(System.in);
+        while(sc.hasNext()){
+        	int x,f,d,p,i;
+        	x=sc.nextInt();
+        	f=sc.nextInt();
+        	d=sc.nextInt();
+        	p=sc.nextInt();
+        	if(f*x>=d)
+        		System.out.println(d/x);
+        	else if(f==1&&x+(x+p)>d){
+        		System.out.println(1);
+        	}else{
+        		for(i=1;f*x+(x+p)*i<d;i++)
+        			;
+        		if(f*x+(x+p)*i==d)
+        			System.out.println(f+i);
+        		else
+        			System.out.println(f+i-1);
+        	}
+        }
+	}
+}
