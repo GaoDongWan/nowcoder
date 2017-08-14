@@ -11,3 +11,38 @@ in
 out
 在一行中输出操作n次之后的b序列,以空格分割,行末无空格。
 */
+
+/*
+找规律  也可以不用b[]直接输出
+*/
+import java.util.Scanner;
+
+public class KongZhiXuLie {
+	public static void main(String args[]){
+		Scanner sc = new Scanner(System.in);
+		while (sc.hasNext()) {
+			int n=sc.nextInt();
+			int a[]=new int[n];
+			int b[]=new int[n];
+			for(int i=0;i<n;i++){
+				a[i]=sc.nextInt();
+			}
+			if(n%2==0){
+				for(int i=0;i<n/2;i++){
+					b[n/2+i]=a[2*i];
+					b[i]=a[n-1-2*i];
+				}
+			}else{
+				b[n/2]=a[0];
+				for(int i=0;i<n/2;i++){
+					b[n/2+i+1]=a[2*i+1];
+					b[i]=a[n-1-2*i];
+				}
+			}
+			System.out.print(b[0]);
+			for(int i=1;i<n;i++){
+				System.out.print(" "+b[i]);
+			}
+		}
+	}
+}
