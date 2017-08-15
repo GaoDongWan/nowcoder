@@ -27,3 +27,130 @@ out
 输出例子1:
 0 1 3 10
 */
+
+//教程
+package nowcoder;
+
+import java.util.Comparator;  
+import java.util.PriorityQueue;  
+import java.util.Scanner;  
+  
+/** 
+ * 网易2017年内推校招 [编程题]堆棋子 
+ *  
+ * @author gaodongwan 
+ * 
+ */  
+public class DuiQiZi {  
+    /* 
+     * 思路：最后关键的棋子的横坐标和纵坐标肯定是出现过的横坐标和纵坐标  
+     * 举个栗子：输入为 
+     *  4  
+     *  1 2 4 9 
+     *  1 1 1 1 
+     *  
+     * 那么最后关键棋子的横坐标必然是1,2,4,9中的一个，纵坐标必然是1 
+     *  
+     * 枚举给定的n个点到n*n种可能点的每个点的曼哈顿距离
+     * 像有n*n行，n列，第[i,j]结点存放的就是点j到i的距离，
+     * 根据问题需求，对每列排序，然后将第k列的数设为前k个点的和
+     * 这样就是求每列的最小值。
+     *   
+     * 在java中可以通过类似大根堆的数据结构PriorityQueue动态将最大值弹出
+     * 假设当前求到每个格子有2个棋子的步骤，一共4个棋子，那么前两个累加，到第三个就要弹出最大的
+     * 这样还是剩余2个，第四个同理，可以求出使棋盘上的这一点有2个棋子需要的最小代价，接着枚举其它各点，其间动态选取最小
+     * 以此类推3个棋子，4个。。。。
+     */ 
+    public static void main(String[] args) {  
+        Scanner sc = new Scanner(System.in);  
+        int n = sc.nextInt();  
+        int[] x = new int[n];  
+        int[] y = new int[n];  
+        for (int i = 0; i < n; i++)  
+            x[i] = sc.nextInt();  
+        for (int i = 0; i < n; i++)  
+            y[i] = sc.nextInt();  
+        sc.close();  
+        StringBuilder sb = new StringBuilder();  
+        sb.append(0);  
+        for (int k = 2; k <= n; k++) {  
+            int sum = Integer.MAX_VALUE;  
+            for (int i = 0; i < n; i++) {  
+                for (int j = 0; j < n; j++) {  
+                    int tmpSum = 0;  
+                    PriorityQueue<Integer> heap = new PriorityQueue<Integer>(k, new Comparator<Integer>() {  
+                        @Override  
+                        public int compare(Integer o1, Integer o2) {  
+                            return o2 - o1;  
+                        }  
+                    });  
+                    for (int a = 0; a < n; a++) {  
+                        int distance = Math.abs(x[a] - x[i]) + Math.abs(y[a] - y[j]);  
+                        tmpSum += distance;  
+  
+                        heap.add(distance);  
+                        if (heap.size() > k) {  
+                            tmpSum -= heap.poll();  
+                        }  
+                    }  
+                    sum = Math.min(sum, tmpSum);  
+                }  
+            }  
+            sb.append(" " + sum);  
+        }  
+        System.out.println(sb.toString());  
+    }  
+}  
+
+
+
+//自己做
+import java.util.Comparator;
+import java.util.PriorityQueue;
+import java.util.Scanner;
+
+public class DuiQiZi {
+	public static void main(String args[]) {
+		Scanner sc = new Scanner(System.in);
+		while (sc.hasNext()) {
+			int n = sc.nextInt();
+			int x[] = new int[n];
+			int y[] = new int[n];
+			int result[] = new int[n];
+			result[0] = 0;
+			for (int i = 0; i < n; i++)
+				x[i] = sc.nextInt();
+			for (int i = 0; i < n; i++)
+				y[i] = sc.nextInt();
+			for (int k = 1; k < n; k++) {
+				int resultSum=Integer.MAX_VALUE;
+				for (int i = 0; i < n; i++) {
+					for (int j = 0; j < n; j++) {
+						int tempSum = 0;
+						PriorityQueue<Integer> q = new PriorityQueue<Integer>(k + 1, new Comparator<Integer>() {
+							@Override
+							public int compare(Integer o1, Integer o2) {
+								// TODO Auto-generated method stub
+								return o2 - o1;
+							}
+						});
+						for (int r = 0; r < n; r++) {
+							int len = Math.abs(x[r] - x[i]) + Math.abs(y[r] - y[j]);
+							tempSum+=len;
+							q.add(len);
+							if(q.size()>k+1){
+								tempSum-=q.poll();
+							}
+						}
+						resultSum=Math.min(resultSum, tempSum);
+					}
+				}
+				result[k]=resultSum;
+			}
+			System.out.print(result[0]);
+			for(int p=1;p<n;p++)
+				System.out.print(" "+result[p]);
+			System.out.print("\n");
+		}
+	}
+}
